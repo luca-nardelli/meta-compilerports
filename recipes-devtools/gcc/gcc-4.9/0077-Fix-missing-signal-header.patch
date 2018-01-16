@@ -1,0 +1,10 @@
+--- a/libsanitizer/asan/asan_linux.cc		2018-01-16 09:38:52.328748036 +0100
++++ b/libsanitizer/asan/asan_linux.cc		2018-01-16 09:39:13.016748743 +0100
+@@ -26,6 +26,7 @@
+ #include <sys/types.h>
+ #include <fcntl.h>
+ #include <pthread.h>
++#include <signal.h>
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <unwind.h>

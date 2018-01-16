@@ -1,0 +1,22 @@
+#OpenEmbedded/Yocto layer with compiler ports
+
+This layer aims at porting some old compilers to newer Yocto release.
+
+## Why?
+
+Because sometimes an old compiler is required, but you still want to use more updated recipes and OE system
+than the ones shipped with the release which supports your compiler.
+
+## Status
+
+Currently the ports have been tested against the "rocko" branch of Poky.
+
+## Dependencies
+
+This layer depends on:
+URI: git://git.openembedded.org/openembedded-core
+branch: rocko
+
+#Contributing
+
+Please submit issues and pull requests via GitHub.

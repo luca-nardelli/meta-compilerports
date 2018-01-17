@@ -1,0 +1,27 @@
+--- a/ftparchive/writer.cc	2018-01-16 23:52:03.146497915 +0100
++++ b/ftparchive/writer.cc	2018-01-16 23:54:01.610501964 +0100
+@@ -989,14 +989,22 @@
+    // FIXME: use TimeRFC1123 here? But that uses GMT to satisfy HTTP/1.1
+    std::ostringstream datestr;
+    datestr.imbue(posix);
+-   datestr << std::put_time(gmtime(&now), "%a, %d %b %Y %H:%M:%S UTC");
++   // put_time is missing prior to GCC 5.2
++   char buf[1024];
++   std::strftime(buf,sizeof(buf),"%a, %d %b %Y %H:%M:%S UTC",gmtime(&now));
++   datestr << buf;
++   //datestr << std::put_time(gmtime(&now), "%a, %d %b %Y %H:%M:%S UTC");
+ 
+    time_t const validuntil = now + _config->FindI("APT::FTPArchive::Release::ValidTime", 0);
+    std::ostringstream validstr;
+    if (validuntil != now)
+    {
+       datestr.imbue(posix);
+-      validstr << std::put_time(gmtime(&validuntil), "%a, %d %b %Y %H:%M:%S UTC");
++      // put_time is missing prior to GCC 5.2
++      char buf[1024];
++      std::strftime(buf,sizeof(buf),"%a, %d %b %Y %H:%M:%S UTC",gmtime(&validuntil));
++      validstr << buf;
++      //validstr << std::put_time(gmtime(&validuntil), "%a, %d %b %Y %H:%M:%S UTC");
+    }
+ 
+    map<string,string> Fields;

@@ -1,0 +1,23 @@
+--- a/apt-pkg/contrib/strutl.cc	2018-01-16 23:44:55.182483285 +0100
++++ b/apt-pkg/contrib/strutl.cc	2018-01-16 23:45:42.034484887 +0100
+@@ -27,6 +27,7 @@
+ #include <sstream>
+ #include <string>
+ #include <vector>
++#include <array>
+ 
+ #include <stddef.h>
+ #include <stdlib.h>
+@@ -762,7 +763,11 @@
+    auto const posix = std::locale::classic();
+    std::ostringstream datestr;
+    datestr.imbue(posix);
+-   datestr << std::put_time(&Conv, "%a, %d %b %Y %H:%M:%S GMT");
++   // put_time is missing prior to GCC 5.2
++   char buf[1024];
++   std::strftime(buf,sizeof(buf),"%a, %d %b %Y %H:%M:%S GMT",&Conv);
++   datestr << buf;
++   //datestr << std::put_time(&Conv, "%a, %d %b %Y %H:%M:%S GMT");
+    return datestr.str();
+ }
+ 									/*}}}*/
